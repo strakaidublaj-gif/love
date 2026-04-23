@@ -2,58 +2,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>👀</title>
+<title>YouTube</title>
 <style>
-  body{margin:0;background:black;color:white;font-family:monospace;overflow:hidden}
-  #center{
-    position:fixed; inset:0; display:flex;
-    align-items:center; justify-content:center;
-    flex-direction:column; text-align:center;
+  body{margin:0;background:#0f0f0f;color:#fff;font-family:Arial}
+  .top{background:#202020;padding:12px;font-size:20px}
+  .box{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    background:#181818;padding:30px;border-radius:10px;
+    text-align:center;box-shadow:0 0 20px #000
   }
-  #emoji{font-size:120px; line-height:1}
-  #text{font-size:28px; margin-top:10px}
+  input{
+    display:block;margin:10px auto;padding:10px;
+    width:220px;background:#303030;border:none;color:white
+  }
+  button{
+    padding:10px 20px;background:red;border:none;color:white;cursor:pointer
+  }
 </style>
 </head>
 <body>
 
-<div id="center">
-  <div id="emoji"></div>
-  <div id="text"></div>
+<div class="top">YouTube</div>
+
+<div class="box">
+  <h2>Hesabına giriş yap</h2>
+  <input placeholder="E-posta">
+  <input type="password" placeholder="Şifre">
+  <button onclick="fakeLogin()">Giriş yap</button>
 </div>
 
 <script>
-// URL'den isim al
-const p = new URLSearchParams(location.search);
-const isim = p.get("isim") || "Sen";
-
-// İlk açılışta göster
-const emoji = document.getElementById("emoji");
-const text  = document.getElementById("text");
-
-function showMiddle(){
-  emoji.innerText = "🖕";
-  text.innerText  = isim + " şaka yakalandın 😄";
+function fakeLogin(){
+  // HİÇBİR VERİ ALINMIYOR
+  document.body.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;font-size:30px;text-align:center;">
+      😄 Şaka yakalandın!<br>Hiçbir bilgi alınmadı.
+    </div>
+  `;
 }
-
-// 0.5 sn sonra ortaya çıksın
-setTimeout(showMiddle, 500);
-
-// İstersen arka planda eski yağmur da kalsın:
-function rain(){
-  const d = document.createElement("div");
-  d.innerText = isim + " seni seviyorum";
-  d.style.position="absolute";
-  d.style.left = Math.random()*innerWidth+"px";
-  d.style.top="0px";
-  d.style.opacity=0.6;
-  document.body.appendChild(d);
-  let y=0, v=Math.random()*4+2;
-  const t=setInterval(()=>{
-    y+=v; d.style.top=y+"px";
-    if(y>innerHeight){ d.remove(); clearInterval(t); }
-  },30);
-}
-setInterval(rain, 150);
 </script>
 
 </body>
