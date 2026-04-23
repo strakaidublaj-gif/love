@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Seni Seviyorum</title>
-  <style>
-    body {
-      margin: 0;
-      background: black;
-      overflow: hidden;
-      font-family: monospace;
-      color: #0f0;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Seni Seviyorum</title>
+
+<style>
+body {
+  margin:0;
+  background:black;
+  overflow:hidden;
+  font-family:monospace;
+  color:#0f0;
+}
+</style>
 </head>
+
 <body>
 
 <script>
+// URL'den isim al
 const params = new URLSearchParams(window.location.search);
 const isim = params.get("isim") || "Sen";
 
+// Yazı yağmuru
 function createText() {
   const el = document.createElement("div");
   el.innerText = isim + " seni seviyorum";
   el.style.position = "absolute";
   el.style.left = Math.random() * window.innerWidth + "px";
   el.style.top = "0px";
+  el.style.color = "white";
+  el.style.textShadow = "0 0 5px #0f0";
   document.body.appendChild(el);
 
   let y = 0;
@@ -42,6 +48,40 @@ function createText() {
 }
 
 setInterval(createText, 120);
+
+// Tıklayınca kalp efekti
+document.addEventListener("click", (e) => {
+  for (let i = 0; i < 12; i++) {
+    const heart = document.createElement("div");
+    heart.innerText = "❤️";
+    heart.style.position = "absolute";
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.fontSize = (Math.random()*20 + 20) + "px";
+    document.body.appendChild(heart);
+
+    let x = e.clientX;
+    let y = e.clientY;
+    const dx = (Math.random() - 0.5) * 8;
+    let dy = -(Math.random() * 6 + 2);
+
+    const anim = setInterval(() => {
+      x += dx;
+      y += dy;
+      dy += 0.2;
+
+      heart.style.left = x + "px";
+      heart.style.top = y + "px";
+      heart.style.opacity = (parseFloat(heart.style.opacity || 1) - 0.02);
+
+      if (heart.style.opacity <= 0) {
+        heart.remove();
+        clearInterval(anim);
+      }
+    }, 30);
+  }
+});
 </script>
 
 </body>
