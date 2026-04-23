@@ -2,78 +2,80 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Matrix</title>
+<title>Nisa ❤️</title>
+
 <style>
-  body { margin:0; background:black; overflow:hidden; }
-  canvas { display:block; }
+  body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:Arial, sans-serif;
+  }
+
+  /* Ortadaki ana yazı */
+  #main{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:40px;
+    font-weight:bold;
+    text-align:center;
+    background:linear-gradient(45deg, red, pink, purple, orange, yellow);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation: glow 2s infinite alternate;
+  }
+
+  @keyframes glow {
+    from { text-shadow: 0 0 10px red; }
+    to { text-shadow: 0 0 30px pink; }
+  }
+
+  .msg{
+    position:absolute;
+    font-size:18px;
+    pointer-events:none;
+    white-space:nowrap;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-100vh); }
+  }
 </style>
 </head>
+
 <body>
 
-<canvas id="c"></canvas>
+<div id="main">
+  Nisa seni çok seviyorum 😍❤️
+</div>
 
 <script>
-const canvas = document.getElementById("c");
-const ctx = canvas.getContext("2d");
+const text = "Nisa seni çok seviyorum 😍❤️";
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+for(let i=0;i<999;i++){
+  const el = document.createElement("div");
+  el.className = "msg";
+  el.innerText = text;
 
-// Matrix karakterleri
-const letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const fontSize = 16;
-const columns = Math.floor(canvas.width / fontSize);
+  // Rastgele konum
+  el.style.left = Math.random()*window.innerWidth + "px";
+  el.style.top = Math.random()*window.innerHeight + "px";
 
-// Her sütunun düşüş pozisyonu
-const drops = Array(columns).fill(1);
+  // Rastgele renk
+  el.style.color = `hsl(${Math.random()*360}, 100%, 50%)`;
 
-// 🖕 ASCII mask (1 olan yerler daha parlak)
-const mask = [
-"000111000",
-"000111000",
-"000111000",
-"000111000",
-"000111000",
-"001111100",
-"001101100",
-"001101100",
-"001101100",
-"011101110",
-"111111111"
-];
+  // Rastgele boyut
+  el.style.fontSize = (Math.random()*20 + 14) + "px";
 
-function draw() {
-  ctx.fillStyle = "rgba(0,0,0,0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Animasyon süresi
+  el.style.animationDuration = (Math.random()*5 + 5) + "s";
 
-  ctx.font = fontSize + "px monospace";
-
-  for (let i = 0; i < drops.length; i++) {
-    const text = letters[Math.floor(Math.random() * letters.length)];
-    const x = i * fontSize;
-    const y = drops[i] * fontSize;
-
-    // Mask içindeyse daha parlak yap
-    let bright = false;
-    const mx = Math.floor(x / (canvas.width / mask[0].length));
-    const my = Math.floor(y / (canvas.height / mask.length));
-
-    if (mask[my] && mask[my][mx] === "1") {
-      bright = true;
-    }
-
-    ctx.fillStyle = bright ? "#00FF00" : "#0f0";
-    ctx.fillText(text, x, y);
-
-    if (y > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
-    }
-
-    drops[i]++;
-  }
+  document.body.appendChild(el);
 }
-
-setInterval(draw, 33);
 </script>
 
 </body>
