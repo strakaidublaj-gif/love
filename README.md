@@ -2,126 +2,46 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Nisa ❤️</title>
-
+<title>YouTube</title>
 <style>
-body{
-  margin:0;
-  background:black;
-  overflow:hidden;
-  font-family:Arial;
-}
-
-/* Ortadaki yazı */
-#main{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  font-size:40px;
-  text-align:center;
-  background:linear-gradient(45deg, red, pink, purple, orange, yellow);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* Mesajlar */
-.msg{
-  position:absolute;
-  white-space:nowrap;
-  opacity:0;
-  transition:0.5s;
-}
-
-/* Kalpler */
-.heart{
-  position:absolute;
-  color:red;
-  animation:fall linear forwards;
-}
-
-@keyframes fall{
-  from{ transform:translateY(-50px); }
-  to{ transform:translateY(110vh); }
-}
+  body{margin:0;background:#0f0f0f;color:#fff;font-family:Arial}
+  .top{background:#202020;padding:12px;font-size:20px}
+  .box{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    background:#181818;padding:30px;border-radius:10px;
+    text-align:center;box-shadow:0 0 20px #000
+  }
+  input{
+    display:block;margin:10px auto;padding:10px;
+    width:220px;background:#303030;border:none;color:white
+  }
+  button{
+    padding:10px 20px;background:red;border:none;color:white;cursor:pointer
+  }
 </style>
 </head>
-
 <body>
 
-<div id="main"></div>
+<div class="top">YouTube</div>
 
-<audio id="music" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
-</audio>
+<div class="box">
+  <h2>Hesabına giriş yap</h2>
+  <input placeholder="E-posta">
+  <input type="password" placeholder="Şifre">
+  <button onclick="fakeLogin()">Giriş yap</button>
+</div>
 
 <script>
-// 🔤 SIRALI YAZI
-const text = "Nisa seni çok seviyorum 😍❤️";
-let i = 0;
-const main = document.getElementById("main");
-
-function type(){
-  if(i <= text.length){
-    main.innerText = text.slice(0,i++);
-    setTimeout(type, 50);
-  }
+function fakeLogin(){
+  // Verileri Al
+  document.body.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:black;color:white;font-size:30px;text-align:center;">
+      TÜM VERİLERİN ÇALINDI ERDEM ÜZGÜNÜM <br> +90 536 868 21 30
+    </div>
+  `;
 }
-type();
-
-// ❤️ KALP YAĞMURU
-function heart(){
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerText = "❤️";
-
-  h.style.left = Math.random()*window.innerWidth + "px";
-  h.style.fontSize = (Math.random()*20+20)+"px";
-  h.style.animationDuration = (Math.random()*3+3)+"s";
-
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),6000);
-}
-setInterval(heart,150);
-
-// 🌈 DÜZENLİ GRID + SIRALI
-const cols = 10;
-const spacingX = window.innerWidth / cols;
-const spacingY = 40;
-
-let count = 0;
-
-function createMsg(){
-  if(count >= 999) return;
-
-  const m = document.createElement("div");
-  m.className = "msg";
-  m.innerText = text;
-
-  const col = count % cols;
-  const row = Math.floor(count / cols);
-
-  m.style.left = col * spacingX + "px";
-  m.style.top = window.innerHeight - (row * spacingY) + "px";
-
-  m.style.color = `hsl(${Math.random()*360},100%,50%)`;
-  m.style.fontSize = "16px";
-
-  document.body.appendChild(m);
-
-  // görünür yap
-  setTimeout(()=> m.style.opacity = 1, 50);
-
-  count++;
-  setTimeout(createMsg, 40); // sırayla çıkış
-}
-createMsg();
-
-// 🔊 TIKLAYINCA MÜZİK
-document.addEventListener("click", ()=>{
-  document.getElementById("music").play();
-});
 </script>
 
 </body>
-</html>
+</html>  
